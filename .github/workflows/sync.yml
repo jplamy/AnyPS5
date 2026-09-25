@@ -1,0 +1,28 @@
+name: Sync Fork with Upstream
+
+on:
+  schedule:
+    - cron: '0 6 * * *' # Tous les jours à 6h UTC (8h Paris)
+  workflow_dispatch: # Permet de lancer manuellement depuis l'onglet Actions
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout fork
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Sync with upstream
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git remote add upstream https://github.com/boykopovar/AnyPS5.git
+          git fetch upstream main
+          git merge upstream/main --no-edit --allow-unrelated-histories
+          git push origin main
