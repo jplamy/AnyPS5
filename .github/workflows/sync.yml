@@ -2,7 +2,8 @@ name: Sync Fork with Upstream
 
 on:
   schedule:
-    - cron: '0 6 * * *' # Tous les jours à 6h UTC (8h Paris)
+    - cron: '0 6 * * *'   # 8h Paris
+    - cron: '0 18 * * *'  # 20h Paris
   workflow_dispatch: # Permet de lancer manuellement depuis l'onglet Actions
 
 permissions:
